@@ -13,27 +13,39 @@ import ForgetPassword from "./pages/auth/ForgetPassword";
 import ScroolToTop from "./components/ScroolToTop";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-
+import ProtectedRoute from "./common/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
-    <Router>
-      <ScroolToTop />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/inventory" element={<Inventory />} />
-        {/* <Route path="/shop" element={<Shop />} /> */}
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forget" element={<ForgetPassword />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <>
+      <Router>
+        <ScroolToTop />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/inventory"
+            element={
+              <ProtectedRoute>
+                <Inventory />
+              </ProtectedRoute>
+            }
+          />
+          {/* <Route path="/shop" element={<Shop />} /> */}
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forget" element={<ForgetPassword />} />
+        </Routes>
+        <Footer />
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
 
