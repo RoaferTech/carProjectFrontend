@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from "react";
+import TopNav from "./TopNav";
+import logo from "../../assets/logo.png";
+import { FaSearch, FaCartArrowDown, FaBars, FaTimes } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+
+const NAV_ITEMS = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Inventory", path: "/inventory" },
+  // { name: "Shop", path: "/shop" },
+  { name: "Blog", path: "/blogs" },
+  { name: "Contact", path: "/contact" },
+];
+const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("Home");
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentItem = NAV_ITEMS.find(
+      (item) => item.path === location.pathname
+    );
+    if (currentItem) {
+      setActiveItem(currentItem.name);
+    }
+  }, [location.pathname]);
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
+  const handleMenuItemClick = (item) => {
+    setActiveItem(item);
+    if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+  };
+
+  const getActiveClass = (item) => {
+    return item === activeItem
+      ? "text-[#05C3DD] border-b-2 border-solid border-[#05C3DD]"
+      : "text-black";
+  };
+
+  return (
+    <>
+      <TopNav />
+      <div className="sticky top-0 z-50 bg-white">
+        <div className="max-w-[1060px] mx-auto py-8 px-5 lg:px-0 flex items-center justify-between ">
+          <Link to="/">
+            <img src={logo} alt="Logo" className="h-9" />
+          </Link>
+          <nav className="hidden md:flex gap-7 font-semibold">
+            {NAV_ITEMS.map((item, index) => (
+              <Link
+                key={index}
+                to={item.path}
+                className={`cursor-pointer font-bold ${getActiveClass(
+                  item.name
+                )}`}
+                onClick={() => handleMenuItemClick(item.name)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex gap-5 relative">
+            <FaSearch className="text-2xl text-[#05C3DD] cursor-pointer" />
+            <div className=" relative">
+              <Link to="/cart">
+                <FaCartArrowDown className="text-2xl text-[#05C3DD] cursor-pointer" />
+              </Link>
+              <span className=" absolute top-[-20px] right-[-10px] px-2 py-[1px] rounded-full bg-[#05C3DD] text-white hover:bg-black">
+                2
+              </span>
+            </div>
+          </div>
+          <div className="md:hidden">
+            <button onClick={handleMobileMenuToggle}>
+              {isMobileMenuOpen ? (
+                <FaTimes className="text-2xl text-[#05C3DD]" />
+              ) : (
+                <FaBars className="text-2xl text-[#05C3DD]" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {isMobileMenuOpen && (
+          <nav className="md:hidden bg-white shadow-md py-4">
+            <ul className="flex flex-col gap-4 items-center">
+              {NAV_ITEMS.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.path}
+                    className={`cursor-pointer font-bold ${getActiveClass(
+                      item.name
+                    )}`}
+                    onClick={() => handleMenuItemClick(item.name)}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Navbar;
