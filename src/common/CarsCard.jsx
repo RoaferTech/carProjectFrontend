@@ -13,8 +13,8 @@ const CarsCard = ({
   condition,
   imgUrl,
   title,
-  reviewCount,
-  totalReivews,
+  reviews,
+  averageRating,
   price,
   model,
   mileage,
@@ -34,7 +34,7 @@ const CarsCard = ({
       )}
       <div className="relative overflow-hidden rounded-lg">
         <img
-          src={imgUrl}
+          src={`http://localhost:4000/${imgUrl}`}
           alt={title}
           className="w-full object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110"
         />
@@ -51,16 +51,16 @@ const CarsCard = ({
         <h2 className="text-lg font-semibold mt-4">{title}</h2>
         <div className="flex items-center gap-2 mt-2 text-[#757F95] text-sm">
           <div className="flex text-[#FBA707]">
-            {Array.from({ length: reviewCount }, (_, i) => (
+            {Array.from({ length: averageRating }, (_, i) => (
               <FaStar key={i} />
             ))}
           </div>
-          <p>{reviewCount}</p>
-          <p className=" capitalize">({totalReivews}&nbsp;reviews)</p>
+          <p>{averageRating}</p>
+          <p className=" capitalize">({reviews.length}&nbsp;reviews)</p>
         </div>
         <div className="flex gap-3 text-[#757F95] text-sm mt-5">
           <p className="flex gap-2 items-center">
-            <RiSteering2Fill className="text-[#05C3DD]" />
+            <RiSteering2Fill className="text-[#05C3DD] capitalize" />
             {Transmission}
           </p>
           <p className="flex gap-2 items-center">
@@ -74,7 +74,7 @@ const CarsCard = ({
             Model:&nbsp;{model}
           </p>
           <p className="flex gap-2 items-center">
-            <FaGasPump className="text-[#05C3DD]" />
+            <FaGasPump className="text-[#05C3DD] capitalize" />
             {fuelType}
           </p>
         </div>

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FaCarAlt } from "react-icons/fa";
-import { CarsData } from "../data/carsData";
 import CarsCard from "../common/CarsCard";
 import ButtonDesign from "../common/ButtonDesign";
 import { IoMdRefresh } from "react-icons/io";
+import { fetchCars } from "../redux/products/CarSlice";
 
 const CarsSections = () => {
+  const dispatch = useDispatch();
+  const { cars, loading, error } = useSelector((state) => state.cars);
+  useEffect(() => {
+    dispatch(fetchCars());
+  }, [dispatch]);
+
   return (
     <div className="bg-[#F9F9F9] py-[80px]">
       <div className="max-w-[1160px] mx-auto">
@@ -16,19 +23,19 @@ const CarsSections = () => {
           Let's Check Latest<span className="text-[#05C3DD]">&nbsp;Cars</span>
         </h3>
         <div className=" py-10 px-4 xl:px-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {CarsData.map((item, index) => (
+          {cars.map((item, index) => (
             <CarsCard
-              Transmission={item.Transmission}
+              Transmission={item.transmission}
               price={item.price}
               title={item.title}
-              imgUrl={item.imgUrl}
+              imgUrl={item.image}
               condition={item.condition}
-              reviewCount={item.reviewCount}
-              totalReivews={item.totalReivews}
               model={item.model}
               mileage={item.mileage}
               fuelType={item.fuelType}
               key={index}
+              reviews={item.reviews}
+              averageRating={item.averageRating}
             />
           ))}
         </div>

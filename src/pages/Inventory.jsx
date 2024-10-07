@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { CarsData } from "../data/carsData";
 import CarsCard from "../common/CarsCard";
-
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCars } from "../redux/products/CarSlice";
 const Inventory = () => {
+  const dispatch = useDispatch();
+  const { cars, loading, error } = useSelector((state) => state.cars);
+  const [sortedCardsData, setSortedCardsData] = useState([...cars]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [sortOption, setSortOption] = useState("default");
-  const [sortedCardsData, setSortedCardsData] = useState([...CarsData]);
 
   useEffect(() => {
-    let sortedData = [...CarsData];
+    dispatch(fetchCars());
+  }, [dispatch]);
+  useEffect(() => {
+    let sortedData = [...cars];
     if (sortOption === "low-to-high") {
       sortedData.sort((a, b) => a.price - b.price);
     } else if (sortOption === "high-to-low") {
@@ -59,13 +65,13 @@ const Inventory = () => {
             {currentItems &&
               currentItems?.map((item, index) => (
                 <CarsCard
-                  Transmission={item.Transmission}
+                  Transmission={item.transmission}
                   price={item.price}
                   title={item.title}
-                  imgUrl={item.imgUrl}
+                  imgUrl={item.image}
                   condition={item.condition}
-                  reviewCount={item.reviewCount}
-                  totalReivews={item.totalReivews}
+                  reviews={item.reviews}
+                  averageRating={item.averageRating}
                   model={item.model}
                   mileage={item.mileage}
                   fuelType={item.fuelType}
