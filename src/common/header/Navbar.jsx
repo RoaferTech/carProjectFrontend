@@ -3,8 +3,7 @@ import TopNav from "./TopNav";
 import logo from "../../assets/logo.png";
 import { FaSearch, FaCartArrowDown, FaBars, FaTimes } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const NAV_ITEMS = [
   { name: "Home", path: "/" },
@@ -17,13 +16,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Home");
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logout successful!");
-  };
   const totalItems = useSelector((state) =>
     state.cart.cartItems.reduce((total, item) => total + item.quantity, 0)
   );
@@ -88,11 +81,6 @@ const Navbar = () => {
                 </span>
               )}
             </div>
-            {isAuthenticated && (
-              <button onClick={handleLogout} className="text-red-500">
-                Logout
-              </button>
-            )}
           </div>
           <div className="md:hidden">
             <button onClick={handleMobileMenuToggle}>

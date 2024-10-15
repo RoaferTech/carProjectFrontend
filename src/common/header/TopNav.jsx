@@ -7,8 +7,17 @@ import {
   FaSignInAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/auth/authSlice";
+import { toast } from "react-toastify";
 
 const TopNav = () => {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Logout successful!");
+  };
   return (
     <div className="relative overflow-hidden">
       <div className="bg-black text-white py-5 px-4 relative overflow-hidden">
@@ -29,20 +38,32 @@ const TopNav = () => {
           </div>
 
           <div className="flex items-center gap-10 md:space-x-4">
-            <Link
-              to="/login"
-              className="flex items-center space-x-2 cursor-pointer"
-            >
-              <FaSignInAlt />
-              <span>Login</span>
-            </Link>
-            <Link
-              to="register"
-              className="flex items-center space-x-2 cursor-pointer"
-            >
-              <FaUserAlt />
-              <span>Registration</span>
-            </Link>
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="flex items-center space-x-2 cursor-pointer"
+              >
+                <FaSignInAlt />
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
+                  <FaSignInAlt />
+                  <span>Login</span>
+                </Link>
+                <Link
+                  to="register"
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
+                  <FaUserAlt />
+                  <span>Registration</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
         <div className="absolute left-[-40px] top-0 h-full w-0 lg:w-[200px] bg-[#05C3DD] skew-x-[45deg]"></div>

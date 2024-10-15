@@ -9,13 +9,21 @@ import {
   FaRegEye,
 } from "react-icons/fa";
 import { RiSteering2Fill } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/products/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CarsCard = ({ item }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+
   const handleAddToCart = () => {
-    dispatch(addToCart(item));
+    if (isLoggedIn) {
+      dispatch(addToCart(item));
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
