@@ -24,19 +24,7 @@ const CarsSections = () => {
         </h3>
         <div className=" py-10 px-4 xl:px-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {cars.map((item, index) => (
-            <CarsCard
-              Transmission={item.transmission}
-              price={item.price}
-              title={item.title}
-              imgUrl={item.image}
-              condition={item.condition}
-              model={item.model}
-              mileage={item.mileage}
-              fuelType={item.fuelType}
-              key={index}
-              reviews={item.reviews}
-              averageRating={item.averageRating}
-            />
+            <CarsCard item={item} key={index} />
           ))}
         </div>
         <div className="flex justify-center">

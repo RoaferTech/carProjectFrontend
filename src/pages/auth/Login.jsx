@@ -18,6 +18,7 @@ const Login = () => {
     (state) => state.auth
   );
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,9 +27,10 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ email, password }));
   };
+
   useEffect(() => {
     if (isAuthenticated) {
-      toast.success("Login successful! ");
+      toast.success("Login successful!");
       navigate("/inventory");
     }
   }, [isAuthenticated, navigate]);
@@ -40,12 +42,12 @@ const Login = () => {
   }, [error]);
 
   return (
-    <div className=" max-w-[600px] mx-auto shadow-lg my-[80px] py-10 px-5 rounded-xl ">
+    <div className="max-w-[600px] mx-auto shadow-lg my-[80px] py-10 px-5 rounded-xl">
       <div className="flex flex-col justify-center items-center gap-5">
         <img src={logo} alt="logo" />
-        <p className=" text-xl text-[#757F95]">Login with your motex account</p>
+        <p className="text-xl text-[#757F95]">Login with your motex account</p>
       </div>
-      <form className=" mt-10 px-5" onSubmit={handleSubmit}>
+      <form className="mt-10 px-5" onSubmit={handleSubmit}>
         <div className="mb-5">
           <label htmlFor="email">Email Address</label>
           <input
@@ -55,6 +57,7 @@ const Login = () => {
             placeholder="Your Email"
             value={email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="mb-5">
@@ -66,6 +69,7 @@ const Login = () => {
             placeholder="Your Password"
             value={password}
             onChange={handleChange}
+            required
           />
         </div>
         <Link
@@ -76,7 +80,7 @@ const Login = () => {
         </Link>
         {error && <p className="text-red-500">{error}</p>}
         <button
-          className=" flex gap-3 items-center bg-[#05C3DD] w-full justify-center text-white font-semibold py-3 px-5 rounded-xl mt-3"
+          className="flex gap-3 items-center bg-[#05C3DD] w-full justify-center text-white font-semibold py-3 px-5 rounded-xl mt-3"
           type="submit"
           disabled={isLoading}
         >

@@ -1,47 +1,14 @@
 import React, { useState } from "react";
 import { CiSquareRemove } from "react-icons/ci";
 import { Link } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart } from "../redux/products/CartSlice";
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Car Engine Parts",
-      price: 1500,
-      quantity: 1,
-      image: "src/assets/car3.jpg",
-    },
-    {
-      id: 2,
-      name: "Car Engine Parts",
-      price: 1500,
-      quantity: 1,
-      image: "src/assets/car2.jpg",
-    },
-    {
-      id: 3,
-      name: "Car Engine Parts",
-      price: 1500,
-      quantity: 1,
-      image: "src/assets/car1.jpg",
-    },
-  ]);
-
-  const handleQuantityChange = (id, increment) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity: Math.max(item.quantity + increment, 1),
-            }
-          : item
-      )
-    );
-  };
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
   const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    dispatch(removeFromCart(id));
   };
 
   const calculateSubtotal = (price, quantity) => price * quantity;

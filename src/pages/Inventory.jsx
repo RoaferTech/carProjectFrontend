@@ -64,19 +64,7 @@ const Inventory = () => {
           <div className=" py-10 px-4 xl:px-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {currentItems &&
               currentItems?.map((item, index) => (
-                <CarsCard
-                  Transmission={item.transmission}
-                  price={item.price}
-                  title={item.title}
-                  imgUrl={item.image}
-                  condition={item.condition}
-                  reviews={item.reviews}
-                  averageRating={item.averageRating}
-                  model={item.model}
-                  mileage={item.mileage}
-                  fuelType={item.fuelType}
-                  key={index}
-                />
+                <CarsCard item={item} key={index} />
               ))}
           </div>
           <div className=" flex justify-center">

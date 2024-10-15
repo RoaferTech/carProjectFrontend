@@ -3,7 +3,6 @@ import Navbar from "./common/header/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Inventory from "./pages/Inventory";
-// import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -33,7 +32,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* <Route path="/shop" element={<Shop />} /> */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />

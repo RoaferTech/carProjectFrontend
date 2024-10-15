@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-
 import { GrSend } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../redux/auth/authSlice";
@@ -23,6 +22,7 @@ const Register = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register({ username, email, password }));
@@ -42,22 +42,24 @@ const Register = () => {
       toast.error(error);
     }
   }, [error]);
+
   return (
-    <div className=" max-w-[600px] mx-auto shadow-lg my-[80px] py-10 px-5 rounded-xl ">
+    <div className="max-w-[600px] mx-auto shadow-lg my-[80px] py-10 px-5 rounded-xl">
       <div className="flex flex-col justify-center items-center gap-5">
         <img src={logo} alt="logo" />
-        <p className=" text-xl text-[#757F95]">Create your motex account</p>
+        <p className="text-xl text-[#757F95]">Create your motex account</p>
       </div>
-      <form className=" mt-10 px-5" onSubmit={handleSubmit}>
+      <form className="mt-10 px-5" onSubmit={handleSubmit}>
         <div className="mb-5">
           <label htmlFor="username">Full Name</label>
           <input
             type="text"
             name="username"
             className="w-full border-2 border-solid rounded-[10px] py-3 px-[18px] mt-3"
-            placeholder="Your Name"
+            placeholder="Your Full Name"
             value={username}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="mb-5">
@@ -69,6 +71,7 @@ const Register = () => {
             placeholder="Your Email"
             value={email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="mb-5">
@@ -80,16 +83,17 @@ const Register = () => {
             placeholder="Your Password"
             value={password}
             onChange={handleChange}
+            required
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <button
-          type="submit"
           className="flex gap-3 items-center bg-[#05C3DD] w-full justify-center text-white font-semibold py-3 px-5 rounded-xl mt-3"
+          type="submit"
           disabled={isLoading}
         >
           <GrSend />
-          {isLoading ? "Registering..." : "Register"}
+          {isLoading ? "Creating account..." : "Register"}
         </button>
         <p className="text-center mt-3 text-[#757F95] font-medium">
           Already have an account?

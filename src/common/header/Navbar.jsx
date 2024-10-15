@@ -3,6 +3,8 @@ import TopNav from "./TopNav";
 import logo from "../../assets/logo.png";
 import { FaSearch, FaCartArrowDown, FaBars, FaTimes } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/auth/authSlice";
 
 const NAV_ITEMS = [
   { name: "Home", path: "/" },
@@ -15,6 +17,18 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Home");
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Logout successful!");
+  };
+  const totalItems = useSelector((state) =>
+    state.cart.cartItems.reduce((total, item) => total + item.quantity, 0)
+  );
+  const ite = useSelector((state) => state.cart);
+  console.log("hiiii", ite);
 
   useEffect(() => {
     const currentItem = NAV_ITEMS.find(
@@ -68,10 +82,17 @@ const Navbar = () => {
               <Link to="/cart">
                 <FaCartArrowDown className="text-2xl text-[#05C3DD] cursor-pointer" />
               </Link>
-              <span className=" absolute top-[-20px] right-[-10px] px-2 py-[1px] rounded-full bg-[#05C3DD] text-white hover:bg-black">
-                2
-              </span>
+              {totalItems >= 0 && (
+                <span className="absolute top-[-15px] right-[-10px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-[#05C3DD] rounded-full">
+                  {totalItems}
+                </span>
+              )}
             </div>
+            {isAuthenticated && (
+              <button onClick={handleLogout} className="text-red-500">
+                Logout
+              </button>
+            )}
           </div>
           <div className="md:hidden">
             <button onClick={handleMobileMenuToggle}>
